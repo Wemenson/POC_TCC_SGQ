@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_19sdh3a" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:collaboration id="jornada_qualidade">
+    <bpmn:participant id="processo_qualitativo_01" name="Avaliação de qualidade" processRef="Process_0k7s6kp" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_0k7s6kp" name="Processo de Qualidade" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0o2b82l">
+      <bpmn:lane id="Lane_03c36iy" name="GESTAO DE QUALIDADE">
+        <bpmn:flowNodeRef>iniciar_processo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sgq_workflow_qualidade</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1hjveq7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1cpq3e3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0h8srsd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1vdtnsv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0fq0fx4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0r0wxfb</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1vryni4" name="GESTOR DE INCIDENTES">
+        <bpmn:flowNodeRef>consulta_historico_incidentes</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0s33wnb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0ghc5kt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0270mc0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0s32cp9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0dfr373</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:serviceTask id="consulta_historico_incidentes" name="Consulta Histórico Incidentes">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://ec2-18-230-69-219.sa-east-1.compute.amazonaws.com:8081/incidente/findById?id=${id_referencia}</camunda:inputParameter>
+            <camunda:inputParameter name="method">
+
+              GET
+ </camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Accept">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="id" />
+            <camunda:outputParameter name="existeIncidente">
+              <camunda:script scriptFormat="Javascript" resource="parseIncidente.js" />
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="id_referencia">${id_referencia}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xft71a</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hv7fh3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0s33wnb" name="Inconformidades">
+      <bpmn:incoming>Flow_1hv7fh3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1q6bd1a</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1imi3o1</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="iniciar_processo" name="Inicio do processo" camunda:formKey="entrada_processo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="nome_produto" type="string" />
+          <camunda:formField id="id_produto" type="string" />
+        </camunda:formData>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="retentativa" />
+          <camunda:inputParameter name="etapa_processo_avaliado" />
+          <camunda:inputParameter name="descricao" />
+          <camunda:inputParameter name="id_referencia" />
+          <camunda:inputParameter name="avalicao_aplicada_tipo" />
+          <camunda:inputParameter name="operador" />
+          <camunda:inputParameter name="data" />
+          <camunda:inputParameter name="setor" />
+          <camunda:outputParameter name="id_referencia">${id_referencia}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0nfoqwh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xft71a</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:startEvent id="sgq_workflow_qualidade">
+      <bpmn:outgoing>Flow_0nfoqwh</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Activity_1hjveq7" name="Entrada de dados">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="retorno">Chegou na entrada de dados</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1q6bd1a</bpmn:incoming>
+      <bpmn:outgoing>Flow_084ro2x</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_08zu7l2">
+        <bpmn:targetRef>DataObjectReference_09bns5n</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1hv7fh3" sourceRef="consulta_historico_incidentes" targetRef="Gateway_0s33wnb" />
+    <bpmn:sequenceFlow id="Flow_0nfoqwh" sourceRef="sgq_workflow_qualidade" targetRef="iniciar_processo" />
+    <bpmn:sequenceFlow id="Flow_0xft71a" sourceRef="iniciar_processo" targetRef="consulta_historico_incidentes" />
+    <bpmn:sequenceFlow id="Flow_047o8hn" sourceRef="Activity_0dfr373" targetRef="Event_0270mc0" />
+    <bpmn:sequenceFlow id="Flow_1imi3o1" name="Existente" sourceRef="Gateway_0s33wnb" targetRef="Activity_0dfr373">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${existeIncidente}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1q6bd1a" name="Inexistente" sourceRef="Gateway_0s33wnb" targetRef="Activity_1hjveq7">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!existeIncidente}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1e2fgz8" sourceRef="Activity_0h8srsd" targetRef="Gateway_1cpq3e3" />
+    <bpmn:sequenceFlow id="Flow_1x1au37" name="Aprovado" sourceRef="Gateway_1cpq3e3" targetRef="Activity_1vdtnsv">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aprovado == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0uruuzo" name="Reprovado" sourceRef="Gateway_1cpq3e3" targetRef="Activity_0s32cp9">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aprovado == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0swkze3" sourceRef="Activity_0s32cp9" targetRef="Event_0ghc5kt" />
+    <bpmn:sequenceFlow id="Flow_0qybmm4" sourceRef="Activity_1vdtnsv" targetRef="Activity_0r0wxfb" />
+    <bpmn:dataObjectReference id="DataObjectReference_09bns5n" dataObjectRef="DataObject_0narz8m" />
+    <bpmn:dataObject id="DataObject_0narz8m" />
+    <bpmn:sequenceFlow id="Flow_084ro2x" sourceRef="Activity_1hjveq7" targetRef="Activity_0h8srsd" />
+    <bpmn:endEvent id="Event_0ghc5kt">
+      <bpmn:incoming>Flow_0swkze3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_0270mc0">
+      <bpmn:incoming>Flow_047o8hn</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_1cpq3e3">
+      <bpmn:incoming>Flow_1e2fgz8</bpmn:incoming>
+      <bpmn:outgoing>Flow_1x1au37</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0uruuzo</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Activity_0s32cp9" name="Registrar Inconformidade">
+      <bpmn:incoming>Flow_0uruuzo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0swkze3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0h8srsd" name="Avalicao de Qualidade">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="aprovado">true</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_084ro2x</bpmn:incoming>
+      <bpmn:outgoing>Flow_1e2fgz8</bpmn:outgoing>
+      <bpmn:property id="Property_167jxtn" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_10b0b7t">
+        <bpmn:sourceRef>DataObjectReference_09bns5n</bpmn:sourceRef>
+        <bpmn:targetRef>Property_167jxtn</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_0dfr373" name="Registrar nova tentativa">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="id" />
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Accept">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="method">
+
+
+
+              PUT
+ </camunda:inputParameter>
+            <camunda:inputParameter name="url">http://ec2-18-230-69-219.sa-east-1.compute.amazonaws.com:8081/incidente/reavaliacao/${id_referencia}</camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="id_referencia">${id_referencia}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1imi3o1</bpmn:incoming>
+      <bpmn:outgoing>Flow_047o8hn</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_1vdtnsv" name="Registro Histórico">
+      <bpmn:incoming>Flow_1x1au37</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qybmm4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0ey34yr" sourceRef="Activity_0r0wxfb" targetRef="Event_0fq0fx4" />
+    <bpmn:endEvent id="Event_0fq0fx4">
+      <bpmn:incoming>Flow_0ey34yr</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_0r0wxfb" name="Notificar área solicitante">
+      <bpmn:incoming>Flow_0qybmm4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ey34yr</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="jornada_qualidade">
+      <bpmndi:BPMNShape id="Participant_0bdfc6t_di" bpmnElement="processo_qualitativo_01" isHorizontal="true">
+        <dc:Bounds x="129" y="80" width="1661" height="430" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1vryni4_di" bpmnElement="Lane_1vryni4" isHorizontal="true">
+        <dc:Bounds x="159" y="310" width="1631" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_03c36iy_di" bpmnElement="Lane_03c36iy" isHorizontal="true">
+        <dc:Bounds x="159" y="80" width="1631" height="230" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ey34yr_di" bpmnElement="Flow_0ey34yr">
+        <di:waypoint x="1570" y="190" />
+        <di:waypoint x="1632" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_084ro2x_di" bpmnElement="Flow_084ro2x">
+        <di:waypoint x="790" y="190" />
+        <di:waypoint x="960" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qybmm4_di" bpmnElement="Flow_0qybmm4">
+        <di:waypoint x="1410" y="190" />
+        <di:waypoint x="1470" y="190" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1435" y="156" width="50" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0swkze3_di" bpmnElement="Flow_0swkze3">
+        <di:waypoint x="1210" y="430" />
+        <di:waypoint x="1332" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1242" y="396" width="58" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uruuzo_di" bpmnElement="Flow_0uruuzo">
+        <di:waypoint x="1160" y="215" />
+        <di:waypoint x="1160" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1134" y="253" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x1au37_di" bpmnElement="Flow_1x1au37">
+        <di:waypoint x="1185" y="190" />
+        <di:waypoint x="1310" y="190" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1224" y="172" width="47" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1e2fgz8_di" bpmnElement="Flow_1e2fgz8">
+        <di:waypoint x="1060" y="190" />
+        <di:waypoint x="1135" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1q6bd1a_di" bpmnElement="Flow_1q6bd1a">
+        <di:waypoint x="590" y="405" />
+        <di:waypoint x="590" y="190" />
+        <di:waypoint x="690" y="190" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="586" y="173" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1imi3o1_di" bpmnElement="Flow_1imi3o1">
+        <di:waypoint x="615" y="430" />
+        <di:waypoint x="720" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="645" y="412" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_047o8hn_di" bpmnElement="Flow_047o8hn">
+        <di:waypoint x="820" y="430" />
+        <di:waypoint x="962" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xft71a_di" bpmnElement="Flow_0xft71a">
+        <di:waypoint x="380" y="230" />
+        <di:waypoint x="380" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nfoqwh_di" bpmnElement="Flow_0nfoqwh">
+        <di:waypoint x="258" y="190" />
+        <di:waypoint x="330" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hv7fh3_di" bpmnElement="Flow_1hv7fh3">
+        <di:waypoint x="430" y="430" />
+        <di:waypoint x="565" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_18soh0k_di" bpmnElement="consulta_historico_incidentes">
+        <dc:Bounds x="330" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ssbfuv_di" bpmnElement="Gateway_0s33wnb" isMarkerVisible="true">
+        <dc:Bounds x="565" y="405" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="549" y="465" width="82" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08cd0pg_di" bpmnElement="iniciar_processo">
+        <dc:Bounds x="330" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0zmo9c3_di" bpmnElement="sgq_workflow_qualidade">
+        <dc:Bounds x="222" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0znp55x_di" bpmnElement="Activity_1hjveq7">
+        <dc:Bounds x="690" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_09bns5n_di" bpmnElement="DataObjectReference_09bns5n">
+        <dc:Bounds x="852" y="135" width="36" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ghc5kt_di" bpmnElement="Event_0ghc5kt">
+        <dc:Bounds x="1332" y="412" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0270mc0_di" bpmnElement="Event_0270mc0">
+        <dc:Bounds x="962" y="412" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1cpq3e3_di" bpmnElement="Gateway_1cpq3e3" isMarkerVisible="true">
+        <dc:Bounds x="1135" y="165" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1128" y="135" width="65" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hj9chg_di" bpmnElement="Activity_0s32cp9">
+        <dc:Bounds x="1110" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zzayff_di" bpmnElement="Activity_0h8srsd">
+        <dc:Bounds x="960" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kxo7nd_di" bpmnElement="Activity_0dfr373">
+        <dc:Bounds x="720" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mbelp2_di" bpmnElement="Activity_1vdtnsv">
+        <dc:Bounds x="1310" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fq0fx4_di" bpmnElement="Event_0fq0fx4">
+        <dc:Bounds x="1632" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1kzdugz_di" bpmnElement="Activity_0r0wxfb">
+        <dc:Bounds x="1470" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_08zu7l2_di" bpmnElement="DataOutputAssociation_08zu7l2">
+        <di:waypoint x="790" y="160" />
+        <di:waypoint x="852" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_10b0b7t_di" bpmnElement="DataInputAssociation_10b0b7t">
+        <di:waypoint x="888" y="160" />
+        <di:waypoint x="960" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

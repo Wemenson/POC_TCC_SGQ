@@ -1,0 +1,60 @@
+<h2>Quadro de divulgações de campanhas</h2>
+<div class="row">
+    <div class="col-sm-4"  *ngFor="let campanha of campanhas;">
+        <div *ngIf="campanha.campanhaencerrada" class="card border-success mb-3" style="max-width: 20rem;">
+            <div class="card-header">Nota divulgação publicitária</div>
+            <div class="card-body text-success">  
+                <h4>Encerramento da ação: <b>{{ campanha.dataacao}}</b></h4>
+                
+                <h5 class="card-title">Cenário do ocorrido</h5>
+                <p>{{ campanha.cenario}}</p>
+
+                <h5 class="card-title">Motivo do incidente</h5>
+                <p>{{ campanha.justificativa}}</p>
+
+                <h5 class="card-title">Plano de ação</h5>
+                <p>{{ campanha.planoacao}}</p>
+
+                <h5 class="card-title">Abrangência da ação</h5>
+                <p>{{ campanha.abrangenciacampanha}}</p>
+
+                <h5 class="card-title">Lista de produtos impactados</h5>
+                <ul *ngFor="let produto of campanha.listprodutos;">
+                <li> {{produto}}</li>
+                </ul>
+                <div class="border-top highlight">
+                    <b *ngIf="campanha.campanhaencerrada">Campanha encerrada</b>
+                    <b *ngIf="!campanha.campanhaencerrada">Campanha em andamento</b>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!campanha.campanhaencerrada" class="card border-danger mb-3" style="max-width: 20rem;">
+            <div class="card-header">Nota divulgação publicitária</div>
+            <div class="card-body text-danger">  
+                <h4>Encerramento da ação: <b>{{ campanha.dataacao}}</b></h4>
+                
+                <h5 class="card-title">Cenário do ocorrido</h5>
+                <p>{{ campanha.cenario}}</p>
+
+                <h5 class="card-title">Motivo do incidente</h5>
+                <p>{{ campanha.justificativa}}</p>
+
+                <h5 class="card-title">Plano de ação</h5>
+                <p>{{ campanha.planoacao}}</p>
+
+                <h5 class="card-title">Abrangência da ação</h5>
+                <p>{{ campanha.abrangenciacampanha}}</p>
+
+                <h5 class="card-title">Lista de produtos impactados</h5>
+                <ul *ngFor="let produto of campanha.listprodutos;">
+                    <li> {{produto}}</li>
+                </ul>
+                <div class="border-top highlight">
+                    <b *ngIf="campanha.campanhaencerrada">Campanha encerrada</b>
+                    <b *ngIf="!campanha.campanhaencerrada">Campanha em andamento</b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

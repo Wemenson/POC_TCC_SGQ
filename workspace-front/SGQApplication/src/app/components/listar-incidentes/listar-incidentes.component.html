@@ -1,0 +1,47 @@
+<div class="list row">
+    <div class="col-md-8">
+      <h1 class="text-hide" style="background-image: url('/assets/sgqicon.svg'); width: 50px; height: 50px;">Incidente</h1> 
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="filtro por titulo do registro"
+          [(ngModel)]="titulo"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            (click)="searchIncidente()" >
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+     
+      <h4>Lista de Incidentes</h4>      
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Titulo</th>
+            <th scope="col">Status</th>
+            <th scope="col">Data de atualização</th>
+            <th scope="col">Mais</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let incidente of incidentes; let i = index" [class.active]="i == currentIndex" (click)="setIncidenteAtivo(incidente, i)">
+            <th scope="row">{{ incidente.id}}</th>
+            <td>{{ incidente.titulo }}</td>
+            <td>{{ incidente.status }}</td>
+            <td> {{ incidente.dataAtualizacao }}</td>
+            <td>  <a  class="btn btn-warning btn-block" routerLink="/incidentes/{{ incidente.id }}">
+              Detalhes
+              </a> </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

@@ -1,0 +1,93 @@
+<div style="width: 100%; margin: auto;">
+    <div class="submit-form">
+      <div *ngIf="!submitted">
+        Usuário: <h3>Lorena Oliveira Santos Live</h3>
+        <div class="form-group">
+          <label for="titulo">Titulo do incidente</label>
+          <input
+            type="text"
+            class="form-control"
+            id="titulo"
+            required
+            [(ngModel)]="incidente.titulo"
+            name="titulo"
+          />
+        </div>
+  
+        <div class="form-group">
+          <label for="descricao">Descrição do incidente</label>
+          <input
+            class="form-control"
+            id="descricao"
+            required
+            [(ngModel)]="incidente.descricao"
+            name="descricao"
+          />
+        </div>
+
+        <div class="form-group">
+            <label for="descricaoCenario">Cenário de teste identificado</label>
+            <input
+              class="form-control"
+              id="descricaoCenario"
+              required
+              [(ngModel)]="incidente.descricaoCenario"
+              name="descricaoCenario"
+            />         
+          </div>
+
+          <div class="form-group">
+            <label for="tipoAvaliacao">Tipo de avaliação</label>
+            <select  name="tipoAvaliacao" [(ngModel)]="incidente.tipoAvaliacao" class="form-control">
+              <option value="1">Avaliativa</option>
+              <option value="2">Preventiva</option>
+              <option value="3">Evolutiva</option>
+              <option value="4">Reavaliação</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="criticidadeIncidente">Criticidade</label>
+            <select name="criticidadeIncidente" [(ngModel)]="incidente.criticidadeIncidente" class="form-control">
+              <option value="1">Alto impacto imagem</option>
+              <option value="2">Alto impacto juridico</option>
+              <option value="3">Alto impacto fornecedores</option>
+              <option value="4">Medio impacto imagem </option>
+              <option value="5">Medio impacto fornecedores</option>
+              <option value="6">Baixo impacto</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="processo">Processo</label>
+            <select name="processo" [(ngModel)]="incidente.processo" class="form-control">
+              <option value="1">12345-asdf-546-zxcv | medição de pressão | manual | Pression Meditor High Level</option>
+              <option value="2">12345-asdf-546-zxcv | medição de temperatura | manual | HJC System </option>
+              <option value="3">12345-asdf-546-zxcv | medição de impacto | automatico | Impact Meditor High Level</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="material">Produto ou serviço</label>
+            <select name="material" [(ngModel)]="incidente.material" class="form-control">
+              <option value="1">Pneu linha popular | produto | 001-cert0-pn&uz | Goodyear</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="planoAcao">Plano de ação</label>
+            <select name="planoAcao" [(ngModel)]="incidente.planoAcao" class="form-control">
+              <option value="1">Suspensão de aplicação | Recall </option>
+            </select>
+          </div>
+ 
+
+        <button (click)="incluirIncidente()" class="btn btn-success btn-lg btn-block">Registrar incidente</button>
+      </div>
+  
+      <div *ngIf="submitted">
+        <h4>Incidente registrado!</h4>
+        <button class="btn btn-success btn-lg btn-block" (click)="novoIncidente()">Adicionar novo incidente</button>
+      </div>
+    </div>
+  </div>

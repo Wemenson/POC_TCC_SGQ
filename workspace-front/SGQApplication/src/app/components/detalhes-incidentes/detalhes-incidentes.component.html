@@ -1,0 +1,96 @@
+
+<div style="margin: auto;">
+    <div *ngIf="currentIncidente" class="edit-form">
+            <div *ngIf="!currentIncidente.resultadosatisfatorio" class="edit-form">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <b>Atenção!</b> Este incidente está com status <b>aberto</b>, verifique a data definida para o plano de ação.
+                </div>
+            </div>
+        <div><h3><label for="currentIncidente">Dados do incidente: <b> {{currentIncidente.titulo}} </b></label></h3></div>
+        <div class="border-top highlight">
+            <p>Situação: 
+                <b *ngIf="currentIncidente.resultadosatisfatorio">Incidente resolvido</b>
+                <b *ngIf="!currentIncidente.resultadosatisfatorio">Pendente resolução</b>
+            </p>
+           <p>Descrição: {{currentIncidente.descricao}} </p>
+           <p>Cenário testado:  {{currentIncidente.cenario}} </p>
+           <p>Data de abertura: {{currentIncidente.dataregistro}} </p>
+           <p>Data de atualização: {{currentIncidente.dataatualizacao}} </p>
+           <p>Versão: {{currentIncidente.versao}} </p>
+        </div>
+        <label for="inccriticidade"><b>Criticidade</b></label>
+        <div class="border-top highlight">
+            <p>Tipo de avaliação: {{currentIncidente.tpavaliacao.descricao}} </p>
+           <p>Criticidade: <b> {{currentIncidente.inccriticidade.descricao}} </b></p>
+        </div>
+      
+        <label for="arprocesso"><b>Processo</b></label>
+        <div class="border-top highlight">
+            <p>Código do processo: {{currentIncidente.arprocesso.processo}} </p>
+           <p>Etapa:  {{currentIncidente.arprocesso.etapa}} </p>
+           <p>Modo de avaliação:  {{currentIncidente.arprocesso.modoavaliacao}} </p>
+           <p>Sistema origem da avaliação: {{currentIncidente.arprocesso.sistemaorigem}} </p>
+           <p>Data de execução:  {{currentIncidente.arprocesso.dtexecucao}} </p>
+        </div>
+
+        <label for="material"><b>Serviço ou Produto</b></label>
+        <div class="border-top highlight">
+            <p>Código de identificação: {{currentIncidente.material.item}} </p>
+           <p>Descrição do produto ou serviço :  {{currentIncidente.material.titulo}} </p>
+           <p>Tipo :  {{currentIncidente.material.material}} </p>
+           <p>Fornecedor : {{currentIncidente.material.fornecimento}} </p>
+           <p>Aplicação do produto ou serviço :  {{currentIncidente.material.aplicacao}} </p>
+           <p>Certificação exigida:  {{currentIncidente.material.certificado}} </p>
+           <p>Lote aplicado:  {{currentIncidente.material.lote}} </p>
+           <p>Entrega ao cliente final:  <b>{{currentIncidente.material.usoClienteFinal}}</b></p>
+        </div>
+
+        <label for="executor"><b>Autor</b></label>
+        <div class="border-top highlight">
+            <p>Tipo de avaliação: {{currentIncidente.arprocesso.executor.nome}} </p>
+           <p>Função: {{currentIncidente.arprocesso.executor.funcao}} </p>
+           <p>Setor: {{currentIncidente.arprocesso.executor.setor}} </p>
+           <p>Unidade: {{currentIncidente.arprocesso.executor.unidade}} </p>
+        </div>
+      
+        <label for="planoacao"><b>Plano de ação</b></label>
+        <div class="border-top highlight">
+            <p>Descrição da ação imediata: {{currentIncidente.planoacao.imediato}} |  Data da ação imeiata: {{currentIncidente.planoacao.dataacaoimediata}} </p>
+           <p>Descrição da ação definitiva: {{currentIncidente.planoacao.definitivo}} |  Data da ação definitiva: {{currentIncidente.planoacao.dataacaoefetiva}} </p>
+           <p>Analise do incidente: {{currentIncidente.planoacao.justificativa}} </p>
+        </div>
+
+        <label for="notificacaoexterna"><b>Plano de divulgação</b></label>
+        <div class="border-top highlight">
+           <p>Notificação a fornecedores: <b>{{currentIncidente.planoacao.notificacaoexterna}} </b></p>
+           <p>Notificação a área juridica: <b>{{currentIncidente.planoacao.notificacaojuridica}}</b> </p>
+           <p>Campanha publicitária a clientes: <b>{{currentIncidente.planoacao.notficacaopubli}}</b> </p>
+        </div>
+
+      <form>
+        <div class="form-groupalert">
+          <input
+            type="hidden"
+            class="form-control"
+            id="resultadosatisfatorio"
+            [(ngModel)]="currentIncidente.resultadosatisfatorio"
+            name="resultadosatisfatorio" />
+        </div>
+       </form>
+  
+       <div *ngIf="!currentIncidente.resultadosatisfatorio" class="edit-form">
+        <button
+            type="submit"
+            class="btn btn-success  btn-lg btn-block"
+            (click)="resolverIncidente()" >
+            Resolver incidente
+        </button>
+        </div>
+      <p>{{ message }}</p>
+    </div>
+  
+    <div *ngIf="!currentIncidente">
+      <br />
+      <p>Desculpe, registro não localizado!</p>
+    </div>
+  </div>

@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.header-background-color {
+    background-color: #472f92;
+}
+.menu-exposto, .menu-exposto__item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 6px 6px 6px;
+}
+
+.menu-exposto, .menu-exposto__item a{
+    color: #f9f9f9;
+}
+
+.row {
+    margin-top: 30px;
+}

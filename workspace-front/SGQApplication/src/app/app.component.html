@@ -1,0 +1,66 @@
+<div>
+  <div class="header-background-color menu-exposto">
+    <div class="menu-exposto__item">
+      <img src="/assets/sgqicon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+      <a class="navbar-brand" href="#">Sistema Gestão de Qualidade</a>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark bd-navbar">
+   
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Gestão de incidentes
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a routerLink="incidentes" class="dropdown-item">Pesquisa de incidentes</a>
+              <div class="dropdown-divider"></div>
+              <a  routerLink="novoincidente" class="dropdown-item">Novo incidentes</a>
+            </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="processo" >Processos de Qualidade</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"  routerLink="painel" >Painel de transparência</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" disabled="disabled">Normas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" disabled="disabled">Consultoria</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" disabled="disabled">Dados e Análises</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" disabled="disabled">Compliance</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" disabled="disabled">Relatórios</a>
+        </li>
+
+       <!-- <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li> -->
+      </ul>
+    </div>
+  </nav>
+
+
+  <div class="container mt-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>

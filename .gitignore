@@ -9,6 +9,7 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+.metadata/
 
 # Package Files #
 *.jar
@@ -21,3 +22,18 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Node Files #
+node_modules
+build
+npm-debug.log
+.env
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*

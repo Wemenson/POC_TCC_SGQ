@@ -1,0 +1,109 @@
+<div class="mb-5 p-4 bg-white shadow-sm">
+  <h2>Processo avaliativo de qualidade automotiva </h2>
+    <div *ngIf="message" class="edit-form">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <p>{{ message }}</p>
+      </div>
+  </div>
+    <div id="stepper4" class="bs-stepper vertical linear">
+      <div class="bs-stepper-header" role="tablist">
+        
+        <div class="step" [class.active]="startProcesso"  data-target="#test-vl-1">
+          <button type="button" class="step-trigger" role="tab" id="stepper4trigger1" aria-controls="test-vl-1" aria-selected="false" >
+            <span class="bs-stepper-circle">1</span>
+            <span class="bs-stepper-label">Iniciar processo</span>
+          </button>
+        </div>
+        
+        <div class="bs-stepper-line"></div>
+        <div class="step" [class.active]="iniciarProcesso" data-target="#test-vl-2">
+          <button type="button" class="step-trigger" role="tab" id="stepper4trigger2" aria-controls="test-vl-2" aria-selected="false">
+            <span class="bs-stepper-circle">2</span>
+            <span class="bs-stepper-label">Entrada do produto ou serviço</span>
+          </button>
+        </div>
+        
+        <div class="bs-stepper-line"></div>
+        <div class="step" [class.active]="validacao" data-target="#test-vl-3">
+          <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3" aria-selected="false">
+            <span class="bs-stepper-circle">3</span>
+            <span class="bs-stepper-label">Validação</span>
+          </button>
+        </div>
+
+        <div class="bs-stepper-line"></div>
+        <div class="step" [class.active]="resultado" data-target="#test-vl-4">
+          <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-4" aria-selected="false">
+            <span class="bs-stepper-circle">4</span>
+            <span class="bs-stepper-label">Conclusão</span>
+          </button>
+        </div>
+
+      </div>
+      <div class="bs-stepper-content">
+        
+          <div id="test-vl-1" role="tabpanel" class="bs-stepper-pane fade dstepper-block" [class.active]="startProcesso" aria-labelledby="stepper4trigger1">
+            <div class="form-group" *ngIf="startProcesso">
+              <p> Usuário: Lorena Oliveira Santos Live  |  Data: {{dataFormatada}} </p>
+              <p> Cargo: Analista de Qualidade de produtos </p>
+              <p> Clique para iniciar o processo avaliativo, informe os dados dados conforme cada etapa manual ou integrada.</p>
+              <button class="btn btn-primary"  (click)="start()">Iniciar processo</button>
+            </div>
+          </div>
+       
+          <div id="test-vl-2" role="tabpanel" class="bs-stepper-pane fade dstepper-block" [class.active]="iniciarProcesso"  aria-labelledby="stepper4trigger2">
+            <div class="form-group" *ngIf="iniciarProcesso">
+                <form>
+                  
+                  <label for="exampleInputPasswordV1">Tipo de avaliação em produto ou serviço:</label>
+                  <select  [(ngModel)]="tarefa.variables.avalicao_aplicada_tipo.value" name="avalicao_aplicada_tipo" class="form-control">
+                    <option value="Produto">Produto</option>
+                    <option value="Servico">Serviço</option>
+                  </select>
+
+                  <label for="exampleInputPasswordV1">Cenário do processo</label>
+                  <select  [(ngModel)]="tarefa.variables.descricao.value" name="descricao" class="form-control">
+                    <option value="Avaliação da resistência dos pneus em velocidade dentro das especificações recomendadas">1 - Avaliação da resistência dos pneus em velocidade dentro das especificações recomendadas</option>
+                  </select>
+
+                  
+                  <label for="exampleInputPasswordV1">Validação da etapa</label>
+                  <select  [(ngModel)]="tarefa.variables.etapa_processo_avaliado.value" name="etapa_processo_avaliado" class="form-control">
+                    <option value="Baixa resitência dos pneus em velocidade 5% menor que o valor máximo recomendado">1 - Baixa resitência dos pneus em velocidade 5% menor que o valor máximo recomendado</option>
+                  </select>
+
+
+                  <label for="exampleInputPasswordV1">Retentativa</label>
+                  <select  [(ngModel)]="tarefa.variables.retentativa.value" name="retentativa" class="form-control">
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                  </select>
+
+                  <label for="exampleInputPasswordV1">Departamento solicitante</label>
+                  <select  [(ngModel)]="tarefa.variables.setor.value" name="setor" class="form-control">
+                    <option value="Pneus e Rodas">1 - Pneus e Rodas</option>
+                    <option value="Motor">2 - Motor</option>
+                    <option value="Estofados">3 - Estofados</option>
+                    <option value="Segurança">4 - Segurança</option>
+                  </select>
+
+                  <button class="btn btn-primary" type="submit" (click)="proximaEtapa()">Próximo</button>
+                </form>
+            </div>
+          </div>
+          
+          <div id="test-vl-3" role="tabpanel" class="bs-stepper-pane fade" aria-labelledby="stepper4trigger3">
+            <button class="btn btn-primary mt-5" onclick="stepper4.previous()">Próximo</button>
+           
+          </div>
+
+          <div id="test-vl-4" role="tabpanel" class="bs-stepper-pane fade dstepper-block"  [class.active]="resultado"  aria-labelledby="stepper4trigger4">
+              <h3>Processo interrompido devido a identificação de incoformidade não resolvida</h3>
+              <h3>Incidente <b>ID 6</b> atualizado e uma nova versão criada.</h3>
+          </div>
+
+        
+      </div>
+    </div>
+  </div>
+  

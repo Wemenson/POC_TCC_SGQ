@@ -1,0 +1,3 @@
+br\com\sgq\Application.class
+br\com\sgq\CORSResponseFilter.class
+br\com\sgq\JerseyConfig.class
